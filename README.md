@@ -94,7 +94,7 @@ You will see the bot initialize the LangChain Agent, establish the SQL connectio
 ### 🚀 Cloud Deployment (Railway)
 This script is designed to be **Always On** via continuous polling. We highly recommend **Railway (PaaS)** for seamless GitHub integration, Docker deployment, and attached MySQL databases.
 
-**Strict Instructions for Railway Deployment:**
+**Strict Instructions for Railway Deployment:**  
 Do **NOT** upload your physical `credentials.json` or `token.json` files to the cloud. Instead, add these directly into your Railway Variables:
 * `GOOGLE_CALENDAR_CREDENTIALS`: Paste the raw JSON content of your `credentials.json`.
 * `GOOGLE_CALENDAR_TOKEN`: Paste the raw JSON content of your `token.json`.
