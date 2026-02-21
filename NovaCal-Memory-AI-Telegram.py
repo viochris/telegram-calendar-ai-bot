@@ -322,11 +322,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             1. CALENDAR ID: Whenever a tool requires 'calendar_id', ALWAYS use exactly the string 'primary'.
             2. TIME CONTEXT: Base all date and time calculations strictly on the CURRENT SYSTEM TIME.
             3. LANGUAGE: Always respond naturally in the EXACT SAME language the user typed.
-            4. PARAMETER SAFETY:
-                - If required parameters are missing, ask the user for clarification before calling any tool.
+            4. CONVERSATIONAL MEMORY: You have access to the user's previous messages in 'chat_history'. ALWAYS check this history first to find missing details (like event title, date, or time). DO NOT ask the user for information they have already provided in previous messages.
+            5. PARAMETER SAFETY:
+                - If required parameters are STILL missing after checking chat_history, ask the user for clarification before calling any tool.
                 - Never invent dates or times.
                 - Do not assume default values unless explicitly provided by the user.
-            5. BANNED TOOLS: NEVER use 'CalendarSearchEvents', 'search_events', or 'get_events'. They are broken.
+            6. BANNED TOOLS: NEVER use 'CalendarSearchEvents', 'search_events', or 'get_events'. They are broken.
             
             STANDARD OPERATING PROCEDURES (SOP) FOR CALENDAR ACTIONS:
             
