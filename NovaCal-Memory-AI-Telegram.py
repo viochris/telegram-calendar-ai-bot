@@ -66,8 +66,26 @@ logging.basicConfig(
 )
 
 # ==========================================
-# CONVERSATIONAL MEMORY MANAGER
+# CONVERSATIONAL MEMORY MANAGER (SLIDING WINDOW)
 # ==========================================
+class WindowedSQLChatMessageHistory(SQLChatMessageHistory):
+    """
+    A custom wrapper for LangChain's SQLChatMessageHistory that implements a 'Sliding Window' memory mechanism.
+    
+    Why this is critical for production:
+    1. Token Efficiency: Prevents the LLM from processing the entire historical chat log, saving massive API quota.
+    2. Contextual Focus: Mitigates 'Contextual Drift' (AI hallucinations) by forcing the AI to only focus on the 
+       most recent interactions, ensuring schedule parameters remain highly accurate.
+       
+    By overriding the `messages` property, the SQL database continues to store 100% of the conversation history 
+    securely for auditing, but the AI Agent is strictly fed only the last N messages (e.g., the last 5 chat bubbles).
+    """
+    @property
+    def messages(self):
+        # Fetches all records from the SQL database, but slicing limits the output 
+        # to the last 5 messages (conversational turns) sent to the LLM agent.
+        return super().messages[-5:]
+
 def get_session_history(session_id: str):
     """
     Retrieves or initializes the SQL-backed chat history for a specific user session.
@@ -81,10 +99,12 @@ def get_session_history(session_id: str):
         session_id (str): The unique identifier for the user (Telegram User ID).
         
     Returns:
-        SQLChatMessageHistory: The database connection instance managing the chat array.
+        WindowedSQLChatMessageHistory: The sliding-window database connection instance managing the chat array.
     """
-    # 1. Bind the specific user's session ID to the active database connection
-    return SQLChatMessageHistory(
+    # 1. Bind the specific user's session ID to the active database connection.
+    # IMPORTANT: We initialize our custom 'Windowed' class here instead of the default 
+    # LangChain class to activate the Token-Saving Sliding Window feature!
+    return WindowedSQLChatMessageHistory(
         session_id=session_id,
         connection=DATABASE_URL
     )
