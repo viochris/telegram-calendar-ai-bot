@@ -8,6 +8,9 @@
 ![MySQL](https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
+> 🛑 **CRITICAL NOTICE: PLEASE READ UNTIL THE END!**
+> Before cloning or deploying this repository, **you MUST read the "Limitations & Disclaimers" section at the bottom of this page.** There are significant architectural trade-offs, high API quota consumption risks, and important developer recommendations regarding this SQL-backed memory version that you need to be aware of.
+
 ## 📌 Overview
 **NovaCal AI** is an enterprise-grade, highly capable Virtual Assistant built for seamless Google Calendar management directly from Telegram.
 
@@ -57,6 +60,18 @@ The time boundary extraction in the custom fetcher tools currently uses a fixed 
 Native LangChain search tools (`CalendarSearchEvents`) are intentionally disabled/banned in the system prompt due to instability, replaced entirely by custom-built extraction functions for maximum reliability.
 ### 4. Occasional Contextual Amnesia (Over-Caution)
 While equipped with an SQL-backed conversational memory, generative models like Gemini 2.5 Flash can occasionally struggle with multi-turn context correlation. Even with explicit system instructions to check the chat history first, the AI might become overly cautious and ask to re-verify a detail (such as the event time or title) that you provided earlier. If this looping behavior occurs, you can explicitly command it to *"just create it with the provided details"*, or simply bypass the loop by providing all event parameters in a single comprehensive message (treating it temporarily like a zero-memory bot).
+### 5. High Token & API Quota Consumption
+Because the bot is stateful, every new message you send also re-transmits the entire conversational history back to the LLM. As the chat grows longer, this consumes a massive amount of tokens per request, which can rapidly exhaust your Google Gemini API daily free tier quota.
+### 6. Contextual Drift & Accuracy Degradation
+As the SQL memory buffer accumulates days or weeks of conversation, the AI can become "distracted" by older, irrelevant scheduling details. This overload of past context can lead to AI hallucinations, confusion, or executing calendar tools with incorrect parameters.
+
+---
+
+> 💡 **DEVELOPER'S VERDICT & RECOMMENDATION**
+> 
+> **For Educational Purposes:** This repository serves as an excellent **learning resource** for developers looking to understand how to implement persistent, **SQL-backed conversational memory** in LangChain. It demonstrates how to maintain stateful context across sessions using a robust database architecture, as opposed to ephemeral in-memory buffers (like `ConversationBufferMemory`) or temporary local files.
+> 
+> **For Daily Practical Use:** Despite the theoretical convenience of multi-turn memory, the most reliable and error-free way to interact with an AI scheduling agent is to provide all parameters upfront. Because of the memory limitations (high token usage and contextual drift) mentioned above, **it is highly recommended to use the [NovaCal AI (Stateless Telegram)](https://github.com/viochris/NovaCal-AI-Telegram.git) version for actual daily use.** The stateless edition is lightning-fast, highly token-efficient, and completely immune to memory-based hallucinations.
 
 ## 📦 Installation & Deployment
 
