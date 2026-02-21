@@ -55,6 +55,8 @@ For cloud deployment, an active SQL database (like MySQL on Railway) is recommen
 The time boundary extraction in the custom fetcher tools currently uses a fixed `+07:00` (WIB/Jakarta) timezone offset for daily queries.
 ### 3. Native Tool Bypassing
 Native LangChain search tools (`CalendarSearchEvents`) are intentionally disabled/banned in the system prompt due to instability, replaced entirely by custom-built extraction functions for maximum reliability.
+### 4. Occasional Contextual Amnesia (Looping)
+While equipped with an SQL-backed memory, the Gemini model's strict system instructions ("always verify missing parameters before execution") can occasionally override its memory recall. In rare cases, the bot might ask for a detail (like time or title) that you have already provided in previous messages. If this looping occurs, simply reiterate the specific detail to force the tool execution.
 
 ## 📦 Installation & Deployment
 
