@@ -1,0 +1,21 @@
+# Telegram Bot Core
+python-telegram-bot>=20.0
+
+# Environment Variables
+python-dotenv
+
+# LangChain & AI Frameworks
+langchain
+langchain-core
+langchain-community
+langchain-google-community
+langchain-google-genai
+
+# Google Calendar API Dependencies
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+
+# Database Drivers for Memory (SQLite is built-in, adding MySQL driver)
+SQLAlchemy
+PyMySQL
