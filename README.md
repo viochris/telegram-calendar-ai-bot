@@ -51,6 +51,7 @@ Features a dynamic credential generator that automatically builds physical `cred
 * **Memory Backend:** SQLAlchemy, PyMySQL (for MySQL Railway), SQLite (Fallback).
 * **Calendar Integration:** Google Calendar API (`google-api-python-client` & `CalendarToolkit`).
 
+
 ## ⚠️ Limitations & Disclaimers
 ### 1. Database Requirement
 For cloud deployment, an active SQL database (like MySQL on Railway) is recommended via the `DATABASE_URL` variable. If left blank, it defaults to a local SQLite file which may be wiped on ephemeral cloud instances upon restart.
@@ -60,8 +61,8 @@ The time boundary extraction in the custom fetcher tools currently uses a fixed 
 Native LangChain search tools (`CalendarSearchEvents`) are intentionally disabled/banned in the system prompt due to instability, replaced entirely by custom-built extraction functions for maximum reliability.
 ### 4. Occasional Contextual Amnesia (Over-Caution)
 While equipped with an SQL-backed conversational memory, generative models like Gemini 2.5 Flash can occasionally struggle with multi-turn context correlation. Even with explicit system instructions to check the chat history first, the AI might become overly cautious and ask to re-verify a detail (such as the event time or title) that you provided earlier. If this looping behavior occurs, you can explicitly command it to *"just create it with the provided details"*, or simply bypass the loop by providing all event parameters in a single comprehensive message (treating it temporarily like a zero-memory bot).
-### 5. High Token & API Quota Consumption
-Because the bot is stateful, every new message you send also re-transmits the entire conversational history back to the LLM. As the chat grows longer, this consumes a massive amount of tokens per request, which can rapidly exhaust your Google Gemini API daily free tier quota.
+### 5. High Token Consumption & Performance Degradation
+Because the bot is stateful, every new message you send also re-transmits the conversational history back to the LLM. **To mitigate this, the system strictly caps the memory buffer to only retain the last 5 individual messages (meaning 1 Human prompt and 1 Bot reply count as 2 separate messages).** However, despite this limitation, **it is still fundamentally wasteful** and consumes a massive amount of your Google Gemini API daily free tier quota. More importantly, this setup actually **reduces the overall performance** of the AI. The LLM's attention span becomes split between trying to comprehend the memory context and executing the complex Calendar tools accurately, which often leads to decreased reliability.
 ### 6. Contextual Drift & Accuracy Degradation
 As the SQL memory buffer accumulates days or weeks of conversation, the AI can become "distracted" by older, irrelevant scheduling details. This overload of past context can lead to AI hallucinations, confusion, or executing calendar tools with incorrect parameters.
 
