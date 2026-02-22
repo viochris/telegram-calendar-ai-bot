@@ -18,6 +18,7 @@ Powered by a **LangChain Tool-Calling Agent** and **Google Gemini 2.5 Flash**, t
 
 > **🌐 EXPLORE OTHER VERSIONS OF NOVACAL AI:**
 > * **[Streamlit Dashboard Edition](https://github.com/viochris/NovaCal-AI-Streamlit.git):** If you are looking for the Visual Web UI version of NovaCal AI.
+> * **[Ephemeral Telegram Edition (Slot-Filling Memory)](https://github.com/viochris/NovaCal-Ephemeral-AI.git):** If you need a balanced architecture using temporary RAM-based memory that auto-clears after each task to save API tokens while allowing multi-turn inputs.
 > * **[Stateless Telegram Edition (No Memory)](https://github.com/viochris/NovaCal-AI-Telegram.git):** If you are looking for the ultra-fast, zero-memory version built purely for One-Shot execution.
 
 ## ⚠️ IMPORTANT: Why This Bot Is Locked To A Single User?
@@ -73,6 +74,8 @@ As the SQL memory buffer accumulates days or weeks of conversation, the AI can b
 > **For Educational Purposes:** This repository serves as an excellent **learning resource** for developers looking to understand how to implement persistent, **SQL-backed conversational memory** in LangChain. It demonstrates how to maintain stateful context across sessions using a robust database architecture, as opposed to ephemeral in-memory buffers (like `ConversationBufferMemory`) or temporary local files.
 > 
 > **For Daily Practical Use:** Despite the theoretical convenience of multi-turn memory, the most reliable and error-free way to interact with an AI scheduling agent is to provide all parameters upfront. Because of the memory limitations (high token usage and contextual drift) mentioned above, **it is highly recommended to use the [NovaCal AI (Stateless Telegram)](https://github.com/viochris/NovaCal-AI-Telegram.git) version for actual daily use.** The stateless edition is lightning-fast, highly token-efficient, and completely immune to memory-based hallucinations.
+>
+> **The Balanced Alternative (Ephemeral Memory):** If the Stateless version feels too restrictive but this SQL Stateful version is too resource-heavy, consider the **[NovaCal AI (Ephemeral Telegram)](https://github.com/viochris/NovaCal-Ephemeral-AI.git)** edition. It utilizes a temporary, RAM-based slot-filling mechanism. The bot retains conversational context just long enough to gather missing parameters for a specific calendar task, then immediately purges its memory upon completion. This architecture prevents contextual drift and significantly reduces API token consumption without sacrificing a natural user experience.
 
 ## 📦 Installation & Deployment
 
