@@ -8,7 +8,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
-> 🛑 **CRITICAL NOTICE: PLEASE READ UNTIL THE END!**
+> 🛑 **CRITICAL NOTICE: PLEASE READ UNTIL THE END!**  
 > Before cloning or deploying this repository, **you MUST read the "Limitations & Disclaimers" section at the bottom of this page.** There are significant architectural trade-offs, high API quota consumption risks, and important developer recommendations regarding this SQL-backed memory version that you need to be aware of.
 
 ## 📌 Overview
