@@ -1,7 +1,7 @@
 import os
 import json
 import logging
-import datetime
+from datetime import datetime, timezone, timedelta
 
 # --- Third-Party Libraries ---
 from dotenv import load_dotenv
@@ -330,7 +330,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         tools = used_tools + [get_id_of_schedules, get_all_schedules]
 
         # Capture the Exact Current System Time for Contextual Accuracy
-        current_datetime = datetime.datetime.now().strftime("%A, %d %B %Y %H:%M:%S")
+        wib_timezone = timezone(timedelta(hours=7))
+        current_datetime = datetime.now(wib_timezone).strftime("%Y-%m-%d %H:%M:%S WIB")
+
         
         # 4. Construct the Custom Hybrid Tool-Calling Prompt
         # This serves as the core "Brain" of the agent, defining strict Standard Operating Procedures (SOP).
