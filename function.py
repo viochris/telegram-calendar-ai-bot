@@ -23,7 +23,8 @@ def get_id_of_schedules(keyword: str) -> str:
             q=keyword,          # The search keyword provided by the AI
             maxResults=10,      # Limit the results to prevent token overflow
             singleEvents=True,  # Expand recurring events into single instances
-            orderBy='startTime'
+            orderBy='startTime',
+            timeZone='Asia/Jakarta'
         ).execute()
 
         # 3. Extract the array of events from the API payload
@@ -96,7 +97,8 @@ def get_all_schedules(start_date: str, end_date: str) -> str:
                     timeMax=timeMax,
                     maxResults=50,      # Increased limit to accommodate multi-day ranges
                     singleEvents=True,  # Expand recurring events into single instances
-                    orderBy='startTime'
+                    orderBy='startTime',
+                    timeZone='Asia/Jakarta'
                 ).execute()
                 all_events.extend(result.get("items", []))
             except:
